@@ -431,6 +431,14 @@ TEST(gie, info_functions) {
         << std::string(init_info.origin);
     ASSERT_EQ(std::string(init_info.name), "epsg");
 
+    init_info = proj_init_info("esri");
+    /* Need to allow for "Unknown" until all commonly distributed EPSG-files
+     * comes with a metadata section */
+    ASSERT_TRUE(std::string(init_info.origin) == "ESRI" ||
+                std::string(init_info.origin) == "Unknown")
+        << std::string(init_info.origin);
+    ASSERT_EQ(std::string(init_info.name), "esri");
+
     /* test proj_rtodms() and proj_dmstor() */
     ASSERT_EQ(std::string("180dN"), proj_rtodms(buf, M_PI, 'N', 'S'));
 

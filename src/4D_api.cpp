@@ -1854,6 +1854,24 @@ PJ_INIT_INFO proj_init_info(const char *initname){
             }
             return ininfo;
         }
+        
+        if (strcmp(initname, "esri") == 0 || strcmp(initname, "ESRI") == 0) {
+            const char* val;
+
+            proj_context_errno_set(ctx, 0);
+
+            strncpy(ininfo.name, initname, sizeof(ininfo.name) - 1);
+            strcpy(ininfo.origin, "ESRI");
+            val = proj_context_get_database_metadata(ctx, "ESRI.VERSION");
+            if (val) {
+                strncpy(ininfo.version, val, sizeof(ininfo.version) - 1);
+            }
+            val = proj_context_get_database_metadata(ctx, "ESRI.DATE");
+            if (val) {
+                strncpy(ininfo.lastupdate, val, sizeof(ininfo.lastupdate) - 1);
+            }
+            return ininfo;
+        }
 
         return ininfo;
     }
